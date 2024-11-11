@@ -1,30 +1,18 @@
-$searchPath = Read-Host -Prompt "Enter the path to search for duplicate folders"
-$outputFile = Join-Path -Path (Get-Location) -ChildPath "duplicate_files.html"
+$searchPath = Read-Host -Prompt "Enter the path to search for duplicate files"
+$outputFile = Join-Path -Path (Get-Location) -ChildPath "duplicate-files.html"
+$fileHashes = @{}
+$files = Get-ChildItem -Path $searchPath -File -Recurse
 
-$folderHashes = @{}
-function Get-FolderContentHash ($folderPath) {
-    $files = Get-ChildItem -Path $folderPath -File -Recurse | Sort-Object FullName
-    $contentString = ""
-    foreach ($file in $files) {
-        $fileHash = Get-FileHash -Path $file.FullName -Algorithm SHA256 | Select-Object -ExpandProperty Hash
-        $contentString += "$($file.FullName):$fileHash`n"
-    }
-    return (Get-FileHash -InputStream ([System.IO.MemoryStream]::new([System.Text.Encoding]::UTF8.GetBytes($contentString)))).Hash
-}
-
-$folders = Get-ChildItem -Path $searchPath -Directory -Recurse
-
-foreach ($folder in $folders) {
+foreach ($file in $files) {
     try {
-
-        $folderHash = Get-FolderContentHash -folderPath $folder.FullName
-        if ($folderHashes.ContainsKey($folderHash)) {
-            $folderHashes[$folderHash] += ,$folder.FullName
+        $fileHash = Get-FileHash -Path $file.FullName -Algorithm SHA256 | Select-Object -ExpandProperty Hash
+        if ($fileHashes.ContainsKey($fileHash)) {
+            $fileHashes[$fileHash] += ,$file.FullName
         } else {
-            $folderHashes[$folderHash] = @($folder.FullName)
+            $fileHashes[$fileHash] = @($file.FullName)
         }
     } catch {
-        Write-Warning "Could not process folder: $($folder.FullName). Error: $_"
+        Write-Warning "Could not process file: $($file.FullName). Error: $_"
     }
 }
 
@@ -32,7 +20,7 @@ $htmlOutput = @"
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Duplicate Folders by Content</title>
+    <title>Duplicate Files in $searchpath</title>
     <style>
         body { font-family: Arial, sans-serif; }
         table { width: 100%; border-collapse: collapse; }
@@ -42,20 +30,20 @@ $htmlOutput = @"
     </style>
 </head>
 <body>
-    <h1>Duplicate Folders by Content Report</h1>
+    <h1>Duplicate Files by Content Report</h1>
     <table>
         <tr>
-            <th>Content Hash</th>
+            <th>File Hash</th>
             <th>Paths</th>
         </tr>
 "@
 
-foreach ($hash in $folderHashes.Keys) {
-    if ($folderHashes[$hash].Count -gt 1) {
+foreach ($hash in $fileHashes.Keys) {
+    if ($fileHashes[$hash].Count -gt 1) {
         $htmlOutput += "<tr>"
         $htmlOutput += "<td>$hash</td>"
         $htmlOutput += "<td><ul>"
-        foreach ($path in $folderHashes[$hash]) {
+        foreach ($path in $fileHashes[$hash]) {
             $htmlOutput += "<li>$path</li>"
         }
         $htmlOutput += "</ul></td>"
@@ -70,5 +58,4 @@ $htmlOutput += @"
 "@
 
 $htmlOutput | Out-File -FilePath $outputFile -Encoding UTF8
-
-Write-Host "Duplicate folders by content have been saved to $outputFile"
+Write-Host "Log Stored at $outputFile"
