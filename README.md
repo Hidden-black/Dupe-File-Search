@@ -1,6 +1,6 @@
 # Dupe File Search
- A Script to find duplicate files in a system by comparing there hashes.<br>
- Its usefull in conditions when a folder has same files with diffrent file names 
+ A Script to find duplicate files in a system by comparing their hashes.<br>
+ Its useful in conditions when a folder has the same files with different file names 
 
 # Exapmle
 You Can find an example here [here](https://github.com/Hidden-black/Dupe-File-Search/tree/main/example)<br>
