@@ -13,6 +13,7 @@ foreach ($file in $files) {
         }
     } catch {
         Write-Warning "Could not process file: $($file.FullName). Error: $_"
+        Write-Host "Please Report the error"
     }
 }
 
@@ -56,9 +57,12 @@ foreach ($hash in $fileHashes.Keys) {
 $htmlOutput += @"
     </table>
 <h3>End of content</h3>
+<p align="right"><a href="https://github.com/Hidden-black/Dupe-File-Search">Made by hidden-black</a></p>
 </body>
 </html>
 "@
 
 $htmlOutput | Out-File -FilePath $outputFile -Encoding UTF8
+
 Write-Host "Log saved at $outputFile"
+Invoke-Item .\dupe-files.html
