@@ -1,5 +1,5 @@
-$searchpath = "D:\"
-$out = "D:\dupe-files.html"
+$searchpath = Read-Host -Prompt "Enter The Directory: "
+$out = Join-Path -Path (Get-Location) -ChildPath "dupe-files.html"
 
 $folderHash = @{}
 
