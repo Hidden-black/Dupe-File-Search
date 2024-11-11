@@ -1,5 +1,5 @@
-$searchPath = Read-Host -Prompt "Enter the path to search for duplicate files"
-$outputFile = Join-Path -Path (Get-Location) -ChildPath "duplicate-files.html"
+$searchPath = Read-Host -Prompt "Enter the search Path"
+$outputFile = Join-Path -Path (Get-Location) -ChildPath "dupe-files.html"
 $fileHashes = @{}
 $files = Get-ChildItem -Path $searchPath -File -Recurse
 
@@ -20,13 +20,14 @@ $htmlOutput = @"
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Duplicate Files in $searchpath</title>
+    <meta charset="UTF-8">
+    <title>Duplicate Files by Content</title>
     <style>
-        body { font-family: Arial, sans-serif; }
+        body {font-family: "Signika Negative", sans-serif;font-weight: 300;cursor: none;margin: 0;padding: 0;background-color: #111;color: aliceblue;}
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ddd; padding: 8px; }
-        th { background-color: #f2f2f2; text-align: left; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
+        th {background-color: #111;color: aliceblue; text-align: left; }
+        tr:nth-child(even) {background-color: #111;color: aliceblue;}
     </style>
 </head>
 <body>
@@ -44,7 +45,8 @@ foreach ($hash in $fileHashes.Keys) {
         $htmlOutput += "<td>$hash</td>"
         $htmlOutput += "<td><ul>"
         foreach ($path in $fileHashes[$hash]) {
-            $htmlOutput += "<li>$path</li>"
+            $enPath = [System.Web.HttpUtility]::HtmlEncode($path)
+            $htmlOutput += "<li>$enPath</li>"
         }
         $htmlOutput += "</ul></td>"
         $htmlOutput += "</tr>"
@@ -53,9 +55,10 @@ foreach ($hash in $fileHashes.Keys) {
 
 $htmlOutput += @"
     </table>
+<h3>End of content</h3>
 </body>
 </html>
 "@
 
 $htmlOutput | Out-File -FilePath $outputFile -Encoding UTF8
-Write-Host "Log Stored at $outputFile"
+Write-Host "Log saved at $outputFile"
