@@ -41,10 +41,75 @@ $htmlOutput = @"
     <title>Duplicate Files Report</title>
 
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #121212;
+            color: #eaeaea;
+        }
+        h1, h2, p {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #444;
+            text-align: left;
+        }
+        th {
+            background-color: #333;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        tr:nth-child(even) {
+            background-color: #2a2a3d;
+        }
+        tr:hover {
+            background-color: #444;
+        }
+        .action-btn {
+            padding: 5px 10px;
+            margin: 2px;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .copy-btn {
+            background-color: #1e90ff;
+            color: #fff;
+        }
+        .copy-btn:hover {
+            background-color: #007acc;
+        }
+        .delete-btn {
+            background-color: #ff4c4c;
+            color: #fff;
+        }
+        .delete-btn:hover {
+            background-color: #e60000;
+        }
+        hr {
+            border: 0;
+            height: 1px;
+            background: #444;
+            margin: 20px 0;
+        }
+        footer {
+            text-align: right;
+            margin-top: 40px;
+            color: #888;
+        }
+        .error-section {
+            margin-top: 40px;
+            color: #e74c3c;
+        }
     </style>
-
-
-
 
 
 
