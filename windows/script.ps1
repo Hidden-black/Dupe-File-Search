@@ -112,6 +112,41 @@ $htmlOutput = @"
     </style>
 
 
+    <script>
+        function copyToClipboard(button, text) {
+            navigator.clipboard.writeText(text).then(function() {
+                const originalText = button.innerText;
+                button.innerText = 'Copied!';
+                setTimeout(() => {
+                    button.innerText = originalText;
+                }, 3000);
+            }, function(err) {
+                alert('Failed to copy: ' + err);
+            });
+        }
+
+        function deleteFile(filePath) {
+            if (confirm('Are you sure you want to delete this file?')) {
+                fetch('delete-file', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ path: filePath })
+                }).then(response => {
+                    if (response.ok) {
+                        alert('File deleted successfully!');
+                        location.reload();
+                    } else {
+                        alert('Failed to delete the file.');
+                    }
+                }).catch(err => {
+                    alert('Error: ' + err);
+                });
+            }
+        }
+    </script>
+
+
+
 
 </head>
 <body>
