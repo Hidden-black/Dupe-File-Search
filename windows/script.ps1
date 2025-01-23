@@ -164,7 +164,6 @@ $htmlOutput = @"
 
 </head>
 
-
 <body>
     <h1>Duplicate Files Report</h1>
     <p>Search Path: $searchPath</p>
