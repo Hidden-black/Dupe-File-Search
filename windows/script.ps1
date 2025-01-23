@@ -37,9 +37,9 @@ $htmlOutput = @"
 <!DOCTYPE html>
 <html>
 <head>
+
     <meta charset="UTF-8">
     <title>Duplicate Files Report</title>
-
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,6 +59,7 @@ $htmlOutput = @"
             padding: 10px;
             border: 1px solid #444;
             text-align: left;
+            word-wrap: break-word;
         }
         th {
             background-color: #333;
@@ -66,12 +67,25 @@ $htmlOutput = @"
             top: 0;
             z-index: 1;
         }
+        td {
+            vertical-align: top;
+        }
         tr:nth-child(even) {
             background-color: #2a2a3d;
         }
         tr:hover {
             background-color: #444;
         }
+        th:nth-child(1), td:nth-child(1) {
+            width: 30%;
+        }
+        th:nth-child(2), td:nth-child(2) {
+            width: 50%;
+        }
+        th:nth-child(3), td:nth-child(3) {
+            width: 20%;
+        }
+
         .action-btn {
             padding: 5px 10px;
             margin: 2px;
@@ -109,17 +123,18 @@ $htmlOutput = @"
             margin-top: 40px;
             color: #e74c3c;
         }
+
     </style>
 
-
     <script>
+
         function copyToClipboard(button, text) {
             navigator.clipboard.writeText(text).then(function() {
                 const originalText = button.innerText;
                 button.innerText = 'Copied!';
                 setTimeout(() => {
                     button.innerText = originalText;
-                }, 3000);
+                }, 1000);
             }, function(err) {
                 alert('Failed to copy: ' + err);
             });
@@ -143,12 +158,13 @@ $htmlOutput = @"
                 });
             }
         }
+
     </script>
 
 
-
-
 </head>
+
+
 <body>
     <h1>Duplicate Files Report</h1>
     <p>Search Path: $searchPath</p>
