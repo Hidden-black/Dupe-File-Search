@@ -194,7 +194,7 @@ foreach ($entry in $duplicateFiles) {
     }
 
     $htmlOutput += "</table>"
-    $htmlOutput += "<hr />"
+    $htmlOutput += "<hr/>"
     $htmlOutput += "</div>"
 }
 
