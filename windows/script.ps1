@@ -27,6 +27,9 @@ foreach ($file in $files) {
 }
 
 $duplicateFiles = $fileHashes.GetEnumerator() | Where-Object { $_.Value.Count -gt 1 }
+$totalDuplicates = $duplicateFiles.Count
+$totalDuplicateFiles = $duplicateFiles | ForEach-Object { $_.Value.Count} | Measure-Object -Sum | Select-Object -ExpandProperty Sum
+
 
 if (-not $duplicateFiles) {
     Write-Host "No duplicate files found." -ForegroundColor Green
@@ -48,7 +51,7 @@ $htmlOutput = @"
             color: #eaeaea;
         }
         h1, h2, p {
-            text-align: center;
+            text-align: left;
         }
         table {
             width: 100%;
@@ -123,8 +126,14 @@ $htmlOutput = @"
             margin-top: 40px;
             color: #e74c3c;
         }
+        
+        hr.rounded {
+            border-top: 3px solid #bbb;
+            border-radius: 2px;
+        }
 
     </style>
+
 
     <script>
 
@@ -159,6 +168,7 @@ $htmlOutput = @"
             }
         }
 
+
     </script>
 
 
@@ -166,8 +176,13 @@ $htmlOutput = @"
 
 <body>
     <h1>Duplicate Files Report</h1>
-    <p>Search Path: $searchPath</p>
-    <p>Generated on: $(Get-Date -Format "HH:mm:ss dd-MM-yyyy")</p>
+    <p><strong>Search Path:</strong> $searchPath</p>
+    <p><strong>Generated on:</strong> $(Get-Date -Format "HH:mm:ss dd-MM-yyyy")</p>
+    <p><strong>Total Groups of Duplicates:</strong> $totalDuplicates</p>
+    <p><strong>Total Duplicate Files:</strong> $totalDuplicateFiles</p>
+    <br>
+    <hr class="rounded">
+    <br>
 "@
 
 foreach ($entry in $duplicateFiles) {
@@ -191,6 +206,7 @@ foreach ($entry in $duplicateFiles) {
         $htmlOutput += "<button class='action-btn delete-btn' onclick='deleteFile(`"$path`")'>Delete File</button>"
         $htmlOutput += "</td>"
         $htmlOutput += "</tr>"
+        
     }
 
     $htmlOutput += "</table>"
@@ -211,7 +227,8 @@ if ($errors.Count -gt 0) {
 
 $htmlOutput += @"
     <footer>
-        <p>Made by <a href='https://github.com/Hidden-black/Dupe-File-Search'>Hidden-black</a></p>
+        <p align="LEFT">Made byHidden-black</p>   
+        <p align= RIGHT>Github<a href='https://github.com/Hidden-black/Dupe-File-Search'></a></p>
     </footer>
 </body>
 </html>
