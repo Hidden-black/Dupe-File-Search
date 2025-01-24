@@ -177,8 +177,7 @@ foreach ($entry in $duplicateFiles) {
         $htmlOutput += "<td><a href='file:///$encodedPath' target='_blank'>$encodedPath</a></td>"
         $htmlOutput += "<td>"
         $htmlOutput += "<button class='action-btn copy-btn' onclick='copyToClipboard(this, `"$path`")'>Copy Path</button>"
-        # $htmlOutput += "<button class='action-btn delete-btn' onclick='deleteFile(`"$path`")'>Delete File</button>"
-        # $htmlOutput += "<button"
+        # $htmlOutput += "<input type='checkbox' class='action-btn' onclick="")'></input>"
         $htmlOutput += "</td>"
         $htmlOutput += "</tr>"
         
@@ -187,6 +186,7 @@ foreach ($entry in $duplicateFiles) {
     $htmlOutput += "</table>"
     $htmlOutput += "<hr/>"
     $htmlOutput += "</div>"
+    
 }
 
 if ($errors.Count -gt 0) {
@@ -203,6 +203,7 @@ if ($errors.Count -gt 0) {
 $htmlOutput += @"
     <footer>
         <p align="LEFT">Made by <a href="https://github.com/Hidden-black">Hidden-black </a>
+        <br>
         <br>
         <a href='https://github.com/Hidden-black/Dupe-File-Search'>Project Link </a></p>
     </footer>
