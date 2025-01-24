@@ -80,13 +80,13 @@ $htmlOutput = @"
             background-color: #444;
         }
         th:nth-child(1), td:nth-child(1) {
-            width: 30%;
+            width: 35%;
         }
         th:nth-child(2), td:nth-child(2) {
-            width: 50%;
+            width: 55%;
         }
         th:nth-child(3), td:nth-child(3) {
-            width: 20%;
+            width: 10%;
         }
 
         .action-btn {
@@ -178,6 +178,7 @@ foreach ($entry in $duplicateFiles) {
         $htmlOutput += "<td>"
         $htmlOutput += "<button class='action-btn copy-btn' onclick='copyToClipboard(this, `"$path`")'>Copy Path</button>"
         # $htmlOutput += "<button class='action-btn delete-btn' onclick='deleteFile(`"$path`")'>Delete File</button>"
+        # $htmlOutput += "<button"
         $htmlOutput += "</td>"
         $htmlOutput += "</tr>"
         
@@ -201,8 +202,9 @@ if ($errors.Count -gt 0) {
 
 $htmlOutput += @"
     <footer>
-        <p align="LEFT">Made by<a href="https://github.com/Hidden-black"> Hidden-black </a></p>   
-        <p align="RIGHT"><a href='https://github.com/Hidden-black/Dupe-File-Search'>Project Link </a></p>
+        <p align="LEFT">Made by <a href="https://github.com/Hidden-black">Hidden-black </a>
+        <br>
+        <a href='https://github.com/Hidden-black/Dupe-File-Search'>Project Link </a></p>
     </footer>
 </body>
 </html>
