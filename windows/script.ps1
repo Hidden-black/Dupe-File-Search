@@ -104,13 +104,7 @@ $htmlOutput = @"
         .copy-btn:hover {
             background-color: #007acc;
         }
-        .delete-btn {
-            background-color: #ff4c4c;
-            color: #fff;
-        }
-        .delete-btn:hover {
-            background-color: #e60000;
-        }
+
         hr {
             border: 0;
             height: 1px;
@@ -149,26 +143,6 @@ $htmlOutput = @"
             });
         }
 
-        function deleteFile(filePath) {
-            if (confirm('Are you sure you want to delete this file?')) {
-                fetch('delete-file', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ path: filePath })
-                }).then(response => {
-                    if (response.ok) {
-                        alert('File deleted successfully!');
-                        location.reload();
-                    } else {
-                        alert('Failed to delete the file.');
-                    }
-                }).catch(err => {
-                    alert('Error: ' + err);
-                });
-            }
-        }
-
-
     </script>
 
 
@@ -203,7 +177,7 @@ foreach ($entry in $duplicateFiles) {
         $htmlOutput += "<td><a href='file:///$encodedPath' target='_blank'>$encodedPath</a></td>"
         $htmlOutput += "<td>"
         $htmlOutput += "<button class='action-btn copy-btn' onclick='copyToClipboard(this, `"$path`")'>Copy Path</button>"
-        $htmlOutput += "<button class='action-btn delete-btn' onclick='deleteFile(`"$path`")'>Delete File</button>"
+        # $htmlOutput += "<button class='action-btn delete-btn' onclick='deleteFile(`"$path`")'>Delete File</button>"
         $htmlOutput += "</td>"
         $htmlOutput += "</tr>"
         
@@ -227,8 +201,8 @@ if ($errors.Count -gt 0) {
 
 $htmlOutput += @"
     <footer>
-        <p align="LEFT">Made byHidden-black</p>   
-        <p align= RIGHT>Github<a href='https://github.com/Hidden-black/Dupe-File-Search'></a></p>
+        <p align="LEFT">Made by<a href="https://github.com/Hidden-black"> Hidden-black </a></p>   
+        <p align="RIGHT"><a href='https://github.com/Hidden-black/Dupe-File-Search'>Project Link </a></p>
     </footer>
 </body>
 </html>
