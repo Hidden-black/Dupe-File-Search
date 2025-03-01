@@ -1,5 +1,5 @@
 # Dupe File Search
- A Script to find duplicate files in a system by comparing their hashes.<br>
+ A Script to find dupe files.<br>
  Its useful in conditions when a folder has the same files with different file names 
 
 # Example
